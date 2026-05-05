@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Это заставляет телефон не зумить -->
     <title>E-ZESTAW | System Logistyczny</title>
     <style>
         :root {
@@ -23,14 +23,13 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
-        /* Навигация */
+        /* Навигация - Адаптивная */
         header {
             background-color: rgba(10, 14, 20, 0.95);
             border-bottom: 1px solid var(--border-color);
-            padding: 15px 0;
+            padding: 10px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -43,278 +42,110 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 40px;
+            padding: 0 20px;
         }
 
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-            letter-spacing: 1px;
-        }
-
+        .logo { font-size: 18px; font-weight: bold; color: white; }
         .logo span { color: var(--accent-blue); }
 
-        nav {
-            display: flex;
-            gap: 20px;
-        }
+        nav { display: flex; gap: 5px; overflow-x: auto; padding-bottom: 5px; } /* Скролл меню на мобилках */
 
         nav button {
             background: none;
             border: none;
             color: var(--text-dim);
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
-            padding: 10px 20px;
-            border-radius: 8px;
-            transition: 0.3s;
-            font-family: inherit;
+            padding: 8px 12px;
+            white-space: nowrap;
         }
 
-        nav button:hover, nav button.active {
-            color: white;
-            background: rgba(59, 130, 246, 0.1);
-        }
+        nav button.active { color: white; background: rgba(59, 130, 246, 0.1); border-radius: 6px; }
 
-        /* Кнопки аккаунта */
-        .user-auth {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+        .user-auth { display: flex; gap: 10px; }
 
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--accent-blue);
-            color: var(--accent-blue);
-            padding: 8px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .btn-outline:hover { background: rgba(59, 130, 246, 0.1); }
-
-        .btn-solid {
-            background: var(--accent-blue);
-            border: 1px solid var(--accent-blue);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .btn-solid:hover { background: var(--accent-blue-hover); }
-
-        /* Система вкладок (страниц) */
+        /* Система страниц */
         .page {
             display: none;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 40px;
-            animation: fadeIn 0.4s ease-in-out;
+            padding: 20px;
+            animation: fadeIn 0.4s ease;
         }
 
-        .page.active {
-            display: block;
-        }
+        .page.active { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- СТРАНИЦА: ГЛАВНАЯ --- */
+        /* --- ГЛАВНАЯ: Адаптивная сетка --- */
         .hero-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-            min-height: 75vh;
+            gap: 30px;
+            padding: 20px 0;
         }
 
-        .hero-text h1 {
-            font-size: 54px;
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
-
-        .hero-text p {
-            font-size: 18px;
-            color: var(--text-dim);
-            margin-bottom: 30px;
-            max-width: 600px;
-        }
+        .hero-text h1 { font-size: 32px; line-height: 1.2; }
 
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 15px;
         }
 
         .stat-box {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            padding: 25px;
+            padding: 15px;
             border-radius: 12px;
         }
 
-        .stat-box span { display: block; }
-        .stat-number { font-size: 32px; font-weight: bold; color: var(--accent-blue); }
-        .stat-desc { color: var(--text-dim); font-size: 14px; text-transform: uppercase; margin-top: 5px; }
+        .stat-number { font-size: 24px; font-weight: bold; color: var(--accent-blue); }
+        .stat-desc { font-size: 11px; color: var(--text-dim); text-transform: uppercase; }
 
-        /* --- СТРАНИЦА: ПАРТНЕРЫ --- */
-        .grid-3 {
+        /* --- КАРТОЧКИ И ОТЗЫВЫ --- */
+        .grid-3, .reviews-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 40px;
+            gap: 20px;
         }
 
-        .card {
+        .card, .review-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            padding: 40px;
-            border-radius: 16px;
+            padding: 20px;
+            border-radius: 12px;
         }
 
-        .card h2 { color: white; margin-top: 0; }
-        .card ul { padding-left: 20px; color: var(--text-dim); }
-
-        /* --- СТРАНИЦА: ОТЗЫВЫ (НОВАЯ) --- */
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .review-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            position: relative;
-        }
-
-        /* Эффект прикрепленного скриншота */
         .review-screenshot {
             width: 100%;
-            height: 180px;
+            height: 150px;
             background-color: #1a222c;
             border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 15px;
             background-size: cover;
             background-position: center;
-            position: relative;
-            overflow: hidden;
         }
 
-        /* Маленький значок "лупы" на скриншоте для реализма */
-        .review-screenshot::after {
-            content: '🔍';
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.6);
-            padding: 5px;
-            border-radius: 4px;
-            font-size: 12px;
+        /* --- МОБИЛЬНАЯ АДАПТАЦИЯ (Media Queries) --- */
+        @media (max-width: 900px) {
+            .hero-section { grid-template-columns: 1fr; text-align: center; }
+            .grid-3, .reviews-grid { grid-template-columns: 1fr; } /* Всё в одну колонку */
+            .header-container { flex-direction: column; gap: 15px; }
+            .hero-text h1 { font-size: 28px; }
+            .user-auth { width: 100%; justify-content: center; }
+            .btn-outline, .btn-solid { flex: 1; text-align: center; font-size: 12px; padding: 10px; }
         }
 
-        .review-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
+        /* Стили кнопок */
+        .btn-outline { border: 1px solid var(--accent-blue); color: var(--accent-blue); background: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; }
+        .btn-solid { background: var(--accent-blue); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; }
 
-        .review-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--accent-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .review-meta h3 { margin: 0; font-size: 16px; color: white; }
-        .review-meta span { font-size: 12px; color: var(--text-dim); }
-        
-        .review-stars { color: #fbbf24; font-size: 14px; margin-bottom: 10px; letter-spacing: 2px; }
-        
-        .review-text {
-            font-size: 14px;
-            color: var(--text-main);
-            font-style: italic;
-            line-height: 1.5;
-            background: rgba(255,255,255,0.03);
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 3px solid var(--accent-blue);
-        }
-
-        /* --- СТРАНИЦА: АВТОРИЗАЦИЯ/РЕГИСТРАЦИЯ --- */
-        .auth-container {
-            max-width: 500px;
-            margin: 80px auto;
-            background: var(--bg-card);
-            padding: 50px;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-
-        .auth-container h2 { text-align: center; margin-bottom: 30px; font-size: 28px; }
-
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; color: var(--text-dim); font-size: 14px; }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            background: var(--bg-main);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: white;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        .form-group input:focus { outline: none; border-color: var(--accent-blue); }
-
-        .auth-btn {
-            width: 100%;
-            background: var(--accent-blue);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .auth-btn:hover { background: var(--accent-blue-hover); }
-
-        .switch-auth {
-            text-align: center;
-            margin-top: 20px;
-            color: var(--text-dim);
-            font-size: 14px;
-        }
-        .switch-auth span { color: var(--accent-blue); cursor: pointer; }
-        .switch-auth span:hover { text-decoration: underline; }
+        /* Форма регистрации */
+        .auth-container { max-width: 400px; margin: 20px auto; background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .form-group { margin-bottom: 15px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; background: var(--bg-main); border: 1px solid var(--border-color); color: white; border-radius: 6px; box-sizing: border-box; }
+        .auth-btn { width: 100%; background: var(--accent-blue); color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
 
     </style>
 </head>
@@ -325,232 +156,81 @@
         <div class="logo">E-<span>ZESTAW</span></div>
         <nav>
             <button class="nav-btn active" onclick="switchPage('home')">Główna</button>
-            <button class="nav-btn" onclick="switchPage('partners')">Partnerzy</button>
-            <button class="nav-btn" onclick="switchPage('tech')">Technologia</button>
-            <button class="nav-btn" onclick="switchPage('reviews')">Opinie</button> <!-- НОВАЯ КНОПКА -->
+            <button class="nav-btn" onclick="switchPage('partners')">Firmy</button>
+            <button class="nav-btn" onclick="switchPage('tech')">Dane</button>
+            <button class="nav-btn" onclick="switchPage('reviews')">Opinie</button>
         </nav>
-        
         <div class="user-auth">
-            <button class="btn-outline" onclick="switchPage('auth', 'login')">Zaloguj się</button>
-            <button class="btn-solid" onclick="switchPage('auth', 'register')">Zarejestruj się</button>
+            <button class="btn-outline" onclick="switchPage('auth', 'login')">Login</button>
+            <button class="btn-solid" onclick="switchPage('auth', 'register')">Start</button>
         </div>
     </div>
 </header>
 
-<!-- СТРАНИЦА 1: ГЛАВНАЯ -->
 <main id="home" class="page active">
     <div class="hero-section">
         <div class="hero-text">
-            <h1>Wirtualna Społeczność Logistyczna</h1>
-            <p>Platforma społecznościowa dla operatorów logistycznych Dolnego Śląska. Optymalizuj procesy, zdobywaj odznaki w systemie reputacji i wymieniaj się wiedzą z ekspertami branży.</p>
-            <button class="btn-solid" style="padding: 15px 30px; font-size: 18px;" onclick="switchPage('auth', 'register')">Rozpocznij projekt</button>
+            <h1>Logistyka Dolnego Śląska</h1>
+            <p>Społeczność e-commerce: wymiana wiedzy, grywalizacja i realne statystyki operacyjne.</p>
+            <button class="btn-solid" style="width: 100%; padding: 15px;" onclick="switchPage('auth', 'register')">Dołącz do projektu</button>
         </div>
         <div class="stats-grid">
-            <div class="stat-box">
-                <span class="stat-number">7.4 min</span>
-                <span class="stat-desc">Średni czas kompletacji</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-number">2.1%</span>
-                <span class="stat-desc">Średnia liczba reklamacji</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-number">120</span>
-                <span class="stat-desc">Aktywnych Użytkowników</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-number">3.2 m/s</span>
-                <span class="stat-desc">Wydajność systemu</span>
-            </div>
+            <div class="stat-box"><span class="stat-number">7.4 min</span><span class="stat-desc">Kompletacja</span></div>
+            <div class="stat-box"><span class="stat-number">2.1%</span><span class="stat-desc">Reklamacje</span></div>
+            <div class="stat-box"><span class="stat-number">1.2m/s</span><span class="stat-desc">Prędkość</span></div>
+            <div class="stat-box"><span class="stat-number">2500</span><span class="stat-desc">Amazon Staff</span></div>
         </div>
     </div>
 </main>
 
-<!-- СТРАНИЦА 2: ПАРТНЕРЫ -->
 <main id="partners" class="page">
-    <h1>Dane Wejściowe - Firmy</h1>
-    <p style="color: var(--text-dim); font-size: 18px;">Profile operacyjne naszych partnerów strategicznych na Dolnym Śląsku.</p>
-    
+    <h2>Partnerzy Strategiczni</h2>
     <div class="grid-3">
-        <div class="card">
-            <h2>Amazon WRO1</h2>
-            <ul>
-                <li>2500 pracowników</li>
-                <li>Wysoka sezonowość (peak Q4 + 40%)</li>
-                <li>Błędy kompletacji: 1,8–3,2% w zależności od zmiany</li>
-            </ul>
-        </div>
-        <div class="card">
-            <h2>LG Energy Solution</h2>
-            <ul>
-                <li>900 pracowników</li>
-                <li>Logistyka komponentów bateryjnych</li>
-                <li>Złożone procesy kontroli jakości</li>
-            </ul>
-        </div>
-        <div class="card">
-            <h2>3LP Siechnice</h2>
-            <ul>
-                <li>420 pracowników</li>
-                <li>Automatyzacja strefy kompletacji</li>
-                <li>Wysoka rotacja sezonowa (25–40%)</li>
-            </ul>
-        </div>
+        <div class="card"><h3>Amazon WRO1</h3><p>Peak Q4 +40%. Wysoka automatyzacja.</p></div>
+        <div class="card"><h3>LG Energy</h3><p>Logistyka baterii EV. 900 pracowników.</p></div>
+        <div class="card"><h3>3LP</h3><p>Fulfillment center. 420 pracowników.</p></div>
     </div>
 </main>
 
-<!-- СТРАНИЦА 3: ТЕХНОЛОГИЯ -->
 <main id="tech" class="page">
-    <h1>Wymagania i Architektura</h1>
-    <div class="grid-3" style="grid-template-columns: 1fr 1fr;">
-        <div class="card">
-            <h2>Wymagania Techniczne</h2>
-            <ul>
-                <li>Responsywny interfejs webowy.</li>
-                <li>Baza danych użytkowników, wątków i aktywności.</li>
-                <li>Mechanizm punktacji i rankingów (Grywalizacja).</li>
-                <li>Panel administracyjny i moderacja.</li>
-                <li>Integracja z platformami szkoleniowymi.</li>
-            </ul>
-        </div>
-        <div class="card">
-            <h2>Oczekiwane Rezultaty</h2>
-            <ul>
-                <li>Działający prototyp platformy.</li>
-                <li>Pełny opis wartości dla użytkowników (magazynier, lider, kierownik).</li>
-                <li>Analiza ryzyk (bezpieczeństwo danych, nadużycia).</li>
-                <li>Minimum 3 aktywne grupy tematyczne na start.</li>
-            </ul>
-        </div>
+    <h2>Dane i Technologie</h2>
+    <div class="grid-3">
+        <div class="card"><h3>System</h3><p>Web / Mobile Responsive Dashboard.</p></div>
+        <div class="card"><h3>Grywalizacja</h3><p>Rankingi, odznaki i punkty reputacji.</p></div>
+        <div class="card"><h3>Bezpieczeństwo</h3><p>Szyfrowanie danych i moderacja treści.</p></div>
     </div>
 </main>
 
-<!-- СТРАНИЦА 4: ОТЗЫВЫ (НОВАЯ ВКЛАДКА) -->
 <main id="reviews" class="page">
-    <h1>Społeczność E-Zestaw</h1>
-    <p style="color: var(--text-dim); font-size: 18px;">Zobacz udostępnione zrzuty ekranu i opinie od naszych pierwszych testerów z Dolnego Śląska.</p>
-    
+    <h2>Opinie użytkowników</h2>
     <div class="reviews-grid">
-        <!-- Отзыв 1 -->
         <div class="review-card">
-            <!-- Эмитация скриншота экрана пользователя -->
-            <div class="review-screenshot" style="background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=400');"></div>
-            
-            <div class="review-header">
-                <div class="review-avatar">M</div>
-                <div class="review-meta">
-                    <h3>Michał (Lider Zmiany)</h3>
-                    <span>Amazon WRO1 • Wysłano z iPhone'a</span>
-                </div>
-            </div>
-            <div class="review-stars">★★★★★</div>
-            <div class="review-text">
-                "Platforma świetnie rozwiązuje problem niskiej komunikacji między zmianami. Wrzuciłem screena z dzisiejszej zmiany - dzięki grupom dyskusyjnym zeszliśmy z błędami kompletacji do 1.8%!"
-            </div>
+            <div class="review-screenshot" style="background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=400');"></div>
+            <p><strong>Michał (Lider):</strong> "Błędy spadły o 1.8%!" ★★★★★</p>
         </div>
-
-        <!-- Отзыв 2 -->
         <div class="review-card">
-            <div class="review-screenshot" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400');"></div>
-            
-            <div class="review-header">
-                <div class="review-avatar" style="background: #10b981;">A</div>
-                <div class="review-meta">
-                    <h3>Anna (Studentka)</h3>
-                    <span>Bielany Wrocławskie • Web App</span>
-                </div>
-            </div>
-            <div class="review-stars">★★★★★</div>
-            <div class="review-text">
-                "System punktacji i odznak to mistrzostwo. Dołączyłam skrin mojego profilu - wbiłam 10 poziom reputacji rozwiązując case-study z rotacji pracowników (w 3LP jest 25-40%). Polecam każdemu studentowi logistyki."
-            </div>
-        </div>
-
-        <!-- Отзыв 3 -->
-        <div class="review-card">
-            <div class="review-screenshot" style="background-image: url('https://images.unsplash.com/photo-1566576721346-d4a3b4eaad5b?auto=format&fit=crop&q=80&w=400');"></div>
-            
-            <div class="review-header">
-                <div class="review-avatar" style="background: #8b5cf6;">T</div>
-                <div class="review-meta">
-                    <h3>Tomasz (Kierownik)</h3>
-                    <span>LG Energy Solution • Android App</span>
-                </div>
-            </div>
-            <div class="review-stars">★★★★☆</div>
-            <div class="review-text">
-                "Załączam foto z drona strefy pakowania. Przestoje średnio wynosiły 12 minut na zmianę. Dzięki panelowi administracyjnemu i wymianie dobrych praktyk z innymi firmami mamy pełną widoczność procesów."
-            </div>
+            <div class="review-screenshot" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=400');"></div>
+            <p><strong>Anna (Studentka):</strong> "Świetny system odznak." ★★★★★</p>
         </div>
     </div>
 </main>
 
-<!-- СТРАНИЦА 5: РЕГИСТРАЦИЯ / АВТОРИЗАЦИЯ -->
 <main id="auth" class="page">
     <div class="auth-container">
-        <h2 id="auth-title">Załóż nowe konto</h2>
-        <form id="auth-form" onsubmit="event.preventDefault(); alert('Formularz wysłany (Demo)!');">
-            <div class="form-group">
-                <label>Rola w systemie</label>
-                <select>
-                    <option>Magazynier</option>
-                    <option>Lider zmiany</option>
-                    <option>Kierownik</option>
-                    <option>Student logistyki</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Adres E-mail</label>
-                <input type="email" placeholder="nazwa@firma.pl" required>
-            </div>
-            <div class="form-group">
-                <label>Hasło</label>
-                <input type="password" placeholder="••••••••" required>
-            </div>
-            <button type="submit" class="auth-btn" id="auth-submit-btn">Zarejestruj się</button>
-        </form>
-        
-        <div class="switch-auth">
-            Masz już konto? <span onclick="switchPage('auth', 'login')">Zaloguj się</span>
-        </div>
+        <h2 id="auth-title">Konto E-Zestaw</h2>
+        <div class="form-group"><input type="email" placeholder="E-mail"></div>
+        <div class="form-group"><input type="password" placeholder="Hasło"></div>
+        <button class="auth-btn">Zatwierdź</button>
     </div>
 </main>
 
 <script>
-    function switchPage(pageId, authType = null) {
-        const pages = document.querySelectorAll('.page');
-        pages.forEach(page => page.classList.remove('active'));
-
-        const navBtns = document.querySelectorAll('.nav-btn');
-        navBtns.forEach(btn => btn.classList.remove('active'));
-
+    function switchPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
-
-        if (pageId !== 'auth') {
-            const activeBtn = Array.from(navBtns).find(btn => btn.getAttribute('onclick').includes(pageId));
-            if (activeBtn) activeBtn.classList.add('active');
-        }
-
-        if (pageId === 'auth') {
-            const title = document.getElementById('auth-title');
-            const submitBtn = document.getElementById('auth-submit-btn');
-            const switchText = document.querySelector('.switch-auth');
-            const roleSelect = document.querySelector('.form-group:first-child');
-
-            if (authType === 'login') {
-                title.innerText = 'Logowanie do systemu';
-                submitBtn.innerText = 'Zaloguj się';
-                roleSelect.style.display = 'none'; 
-                switchText.innerHTML = `Nie masz konta? <span onclick="switchPage('auth', 'register')">Zarejestruj się</span>`;
-            } else {
-                title.innerText = 'Załóż nowe konto';
-                submitBtn.innerText = 'Zarejestruj się';
-                roleSelect.style.display = 'block'; 
-                switchText.innerHTML = `Masz już konto? <span onclick="switchPage('auth', 'login')">Zaloguj się</span>`;
-            }
-        }
-        
-        window.scrollTo(0, 0);
+        event.currentTarget.classList.add('active');
+        window.scrollTo(0,0);
     }
 </script>
 
