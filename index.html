@@ -1,238 +1,801 @@
+```html
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Это заставляет телефон не зумить -->
-    <title>E-ZESTAW | System Logistyczny</title>
-    <style>
-        :root {
-            --bg-main: #0a0e14;
-            --bg-card: #121820;
-            --accent-blue: #3b82f6;
-            --accent-blue-hover: #2563eb;
-            --accent-green: #10b981;
-            --text-main: #f3f4f6;
-            --text-dim: #9ca3af;
-            --border-color: #1f2937;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-ZESTAW | Platforma Logistyczna</title>
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+<style>
 
-        /* Навигация - Адаптивная */
-        header {
-            background-color: rgba(10, 14, 20, 0.95);
-            border-bottom: 1px solid var(--border-color);
-            padding: 10px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
+:root{
+    --bg:#0b1017;
+    --card:#131b25;
+    --card2:#1b2430;
+    --blue:#3b82f6;
+    --green:#10b981;
+    --text:#f1f5f9;
+    --dim:#94a3b8;
+    --border:#243041;
+    --shadow:0 10px 30px rgba(0,0,0,0.4);
+}
 
-        .header-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .logo { font-size: 18px; font-weight: bold; color: white; }
-        .logo span { color: var(--accent-blue); }
+body{
+    font-family:Segoe UI, Arial, sans-serif;
+    background:
+    radial-gradient(circle at top left, rgba(59,130,246,0.15), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(16,185,129,0.12), transparent 25%),
+    #0b1017;
+    color:var(--text);
+    overflow-x:hidden;
+}
 
-        nav { display: flex; gap: 5px; overflow-x: auto; padding-bottom: 5px; } /* Скролл меню на мобилках */
+/* HEADER */
 
-        nav button {
-            background: none;
-            border: none;
-            color: var(--text-dim);
-            font-size: 14px;
-            cursor: pointer;
-            padding: 8px 12px;
-            white-space: nowrap;
-        }
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(9,15,24,0.95);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+}
 
-        nav button.active { color: white; background: rgba(59, 130, 246, 0.1); border-radius: 6px; }
+.header-container{
+    max-width:1600px;
+    margin:auto;
+    padding:18px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
 
-        .user-auth { display: flex; gap: 10px; }
+.logo{
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:2px;
+}
 
-        /* Система страниц */
-        .page {
-            display: none;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-            animation: fadeIn 0.4s ease;
-        }
+.logo span{
+    color:var(--blue);
+}
 
-        .page.active { display: block; }
+nav{
+    display:flex;
+    gap:15px;
+}
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+nav button{
+    background:none;
+    border:none;
+    color:var(--dim);
+    font-size:16px;
+    cursor:pointer;
+    padding:12px 18px;
+    border-radius:10px;
+    transition:0.25s;
+}
 
-        /* --- ГЛАВНАЯ: Адаптивная сетка --- */
-        .hero-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            padding: 20px 0;
-        }
+nav button:hover,
+nav button.active{
+    background:rgba(59,130,246,0.15);
+    color:white;
+}
 
-        .hero-text h1 { font-size: 32px; line-height: 1.2; }
+/* BUTTONS */
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
+.btn{
+    padding:14px 22px;
+    border-radius:12px;
+    border:none;
+    cursor:pointer;
+    font-weight:700;
+    transition:0.25s;
+}
 
-        .stat-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            border-radius: 12px;
-        }
+.btn-primary{
+    background:linear-gradient(135deg,var(--blue),#60a5fa);
+    color:white;
+    box-shadow:0 10px 25px rgba(59,130,246,0.35);
+}
 
-        .stat-number { font-size: 24px; font-weight: bold; color: var(--accent-blue); }
-        .stat-desc { font-size: 11px; color: var(--text-dim); text-transform: uppercase; }
+.btn-primary:hover{
+    transform:translateY(-2px);
+}
 
-        /* --- КАРТОЧКИ И ОТЗЫВЫ --- */
-        .grid-3, .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
+.btn-outline{
+    background:none;
+    border:1px solid var(--blue);
+    color:var(--blue);
+}
 
-        .card, .review-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            border-radius: 12px;
-        }
+.auth-buttons{
+    display:flex;
+    gap:15px;
+}
 
-        .review-screenshot {
-            width: 100%;
-            height: 150px;
-            background-color: #1a222c;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            background-size: cover;
-            background-position: center;
-        }
+/* PAGE */
 
-        /* --- МОБИЛЬНАЯ АДАПТАЦИЯ (Media Queries) --- */
-        @media (max-width: 900px) {
-            .hero-section { grid-template-columns: 1fr; text-align: center; }
-            .grid-3, .reviews-grid { grid-template-columns: 1fr; } /* Всё в одну колонку */
-            .header-container { flex-direction: column; gap: 15px; }
-            .hero-text h1 { font-size: 28px; }
-            .user-auth { width: 100%; justify-content: center; }
-            .btn-outline, .btn-solid { flex: 1; text-align: center; font-size: 12px; padding: 10px; }
-        }
+.page{
+    display:none;
+    max-width:1600px;
+    margin:auto;
+    padding:50px 40px;
+    animation:fade 0.3s ease;
+}
 
-        /* Стили кнопок */
-        .btn-outline { border: 1px solid var(--accent-blue); color: var(--accent-blue); background: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; }
-        .btn-solid { background: var(--accent-blue); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+.page.active{
+    display:block;
+}
 
-        /* Форма регистрации */
-        .auth-container { max-width: 400px; margin: 20px auto; background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); }
-        .form-group { margin-bottom: 15px; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; background: var(--bg-main); border: 1px solid var(--border-color); color: white; border-radius: 6px; box-sizing: border-box; }
-        .auth-btn { width: 100%; background: var(--accent-blue); color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
 
-    </style>
+/* HERO */
+
+.hero{
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:60px;
+    align-items:center;
+    min-height:80vh;
+}
+
+.hero h1{
+    font-size:72px;
+    line-height:1.1;
+    margin-bottom:25px;
+}
+
+.hero h1 span{
+    color:var(--blue);
+}
+
+.hero p{
+    font-size:20px;
+    color:var(--dim);
+    margin-bottom:35px;
+    max-width:700px;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.stat{
+    background:linear-gradient(145deg,var(--card),var(--card2));
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:30px;
+    box-shadow:var(--shadow);
+}
+
+.stat-number{
+    font-size:44px;
+    font-weight:900;
+    color:var(--blue);
+}
+
+.stat-label{
+    margin-top:10px;
+    color:var(--dim);
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+/* TITLES */
+
+.section-title{
+    font-size:46px;
+    margin-bottom:40px;
+}
+
+/* PARTNERS */
+
+.partners-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.partner-card{
+    background:linear-gradient(145deg,var(--card),var(--card2));
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:35px;
+    transition:0.3s;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+}
+
+.partner-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:5px;
+    background:linear-gradient(90deg,var(--blue),var(--green));
+}
+
+.partner-card:hover{
+    transform:translateY(-10px);
+    border-color:var(--blue);
+    box-shadow:0 25px 50px rgba(0,0,0,0.5);
+}
+
+.partner-card h3{
+    font-size:30px;
+    margin-bottom:15px;
+}
+
+.partner-card p{
+    color:var(--dim);
+    line-height:1.7;
+}
+
+/* TECH */
+
+.tech-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.tech-card{
+    background:linear-gradient(145deg,var(--card),var(--card2));
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:35px;
+    transition:0.3s;
+}
+
+.tech-card:hover{
+    transform:translateY(-8px);
+    border-color:var(--blue);
+    box-shadow:0 20px 50px rgba(59,130,246,0.2);
+}
+
+.tech-card h3{
+    margin-bottom:18px;
+    font-size:26px;
+}
+
+.tech-card p{
+    color:var(--dim);
+    line-height:1.7;
+}
+
+/* REVIEWS */
+
+.reviews{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:30px;
+}
+
+.review{
+    background:var(--card);
+    border-radius:20px;
+    border:1px solid var(--border);
+    overflow:hidden;
+}
+
+.review img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+}
+
+.review-content{
+    padding:25px;
+}
+
+.review-content p{
+    color:var(--dim);
+    line-height:1.7;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.7);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    padding:40px;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-content{
+    width:100%;
+    max-width:900px;
+    background:linear-gradient(145deg,#141c27,#1c2634);
+    border:1px solid var(--border);
+    border-radius:25px;
+    padding:45px;
+    position:relative;
+    animation:popup 0.25s ease;
+    box-shadow:0 30px 60px rgba(0,0,0,0.5);
+}
+
+@keyframes popup{
+    from{
+        opacity:0;
+        transform:scale(0.9);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.close{
+    position:absolute;
+    top:20px;
+    right:25px;
+    font-size:30px;
+    cursor:pointer;
+    color:var(--dim);
+}
+
+.modal h2{
+    font-size:44px;
+    margin-bottom:20px;
+}
+
+.modal p{
+    color:var(--dim);
+    line-height:1.8;
+    font-size:18px;
+    margin-bottom:20px;
+}
+
+.modal li{
+    margin-bottom:12px;
+    color:#dbeafe;
+}
+
+/* FOOTER */
+
+.footer{
+    margin-top:100px;
+    padding:35px;
+    border-top:1px solid var(--border);
+    background:#0a1018;
+}
+
+.footer-content{
+    max-width:1600px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:var(--dim);
+}
+
+.creator span{
+    color:var(--blue);
+    font-weight:bold;
+}
+
+@media(max-width:1100px){
+
+    .hero{
+        grid-template-columns:1fr;
+    }
+
+    .partners-grid,
+    .tech-grid,
+    .reviews{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:50px;
+    }
+
+    .footer-content{
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+    }
+
+}
+
+</style>
 </head>
+
 <body>
 
 <header>
-    <div class="header-container">
-        <div class="logo">E-<span>ZESTAW</span></div>
-        <nav>
-            <button class="nav-btn active" onclick="switchPage('home')">Główna</button>
-            <button class="nav-btn" onclick="switchPage('partners')">Firmy</button>
-            <button class="nav-btn" onclick="switchPage('tech')">Dane</button>
-            <button class="nav-btn" onclick="switchPage('reviews')">Opinie</button>
-        </nav>
-        <div class="user-auth">
-            <button class="btn-outline" onclick="switchPage('auth', 'login')">Login</button>
-            <button class="btn-solid" onclick="switchPage('auth', 'register')">Start</button>
-        </div>
-    </div>
+
+<div class="header-container">
+
+<div class="logo">
+E-<span>ZESTAW</span>
+</div>
+
+<nav>
+<button class="nav-btn active" onclick="switchPage('home', this)">Główna</button>
+<button class="nav-btn" onclick="switchPage('partners', this)">Partnerzy</button>
+<button class="nav-btn" onclick="switchPage('tech', this)">Technologie</button>
+<button class="nav-btn" onclick="switchPage('reviews', this)">Opinie</button>
+</nav>
+
+<div class="auth-buttons">
+
+<button class="btn btn-outline" onclick="openLogin()">
+Login
+</button>
+
+<button class="btn btn-primary" onclick="openRegister()">
+Start
+</button>
+
+</div>
+
+</div>
+
 </header>
 
+<!-- HOME -->
+
 <main id="home" class="page active">
-    <div class="hero-section">
-        <div class="hero-text">
-            <h1>Logistyka Dolnego Śląska</h1>
-            <p>Społeczność e-commerce: wymiana wiedzy, grywalizacja i realne statystyki operacyjne.</p>
-            <button class="btn-solid" style="width: 100%; padding: 15px;" onclick="switchPage('auth', 'register')">Dołącz do projektu</button>
-        </div>
-        <div class="stats-grid">
-            <div class="stat-box"><span class="stat-number">7.4 min</span><span class="stat-desc">Kompletacja</span></div>
-            <div class="stat-box"><span class="stat-number">2.1%</span><span class="stat-desc">Reklamacje</span></div>
-            <div class="stat-box"><span class="stat-number">1.2m/s</span><span class="stat-desc">Prędkość</span></div>
-            <div class="stat-box"><span class="stat-number">2500</span><span class="stat-desc">Amazon Staff</span></div>
-        </div>
-    </div>
+
+<section class="hero">
+
+<div>
+
+<h1>
+Profesjonalna <span>Platforma Logistyczna</span>
+</h1>
+
+<p>
+E-ZESTAW łączy magazyny, firmy logistyczne i pracowników
+w jeden nowoczesny ekosystem analityczny.
+</p>
+
+<button class="btn btn-primary">
+Rozpocznij współpracę
+</button>
+
+</div>
+
+<div class="stats-grid">
+
+<div class="stat">
+<div class="stat-number">7.4 min</div>
+<div class="stat-label">Kompletacja</div>
+</div>
+
+<div class="stat">
+<div class="stat-number">2.1%</div>
+<div class="stat-label">Reklamacje</div>
+</div>
+
+<div class="stat">
+<div class="stat-number">98.7%</div>
+<div class="stat-label">Skuteczność</div>
+</div>
+
+<div class="stat">
+<div class="stat-number">2500+</div>
+<div class="stat-label">Pracowników</div>
+</div>
+
+</div>
+
+</section>
+
 </main>
+
+<!-- PARTNERS -->
 
 <main id="partners" class="page">
-    <h2>Partnerzy Strategiczni</h2>
-    <div class="grid-3">
-        <div class="card"><h3>Amazon WRO1</h3><p>Peak Q4 +40%. Wysoka automatyzacja.</p></div>
-        <div class="card"><h3>LG Energy</h3><p>Logistyka baterii EV. 900 pracowników.</p></div>
-        <div class="card"><h3>3LP</h3><p>Fulfillment center. 420 pracowników.</p></div>
-    </div>
+
+<h2 class="section-title">
+Partnerzy Strategiczni
+</h2>
+
+<div class="partners-grid">
+
+<div class="partner-card" onclick="openModal('amazon')">
+
+<h3>Amazon WRO1</h3>
+
+<p>
+Największe centrum fulfillment
+w regionie Dolnego Śląska.
+</p>
+
+</div>
+
+<div class="partner-card" onclick="openModal('lg')">
+
+<h3>LG Energy Solution</h3>
+
+<p>
+Produkcja baterii EV
+oraz logistyka automotive.
+</p>
+
+</div>
+
+<div class="partner-card" onclick="openModal('3lp')">
+
+<h3>3LP Fulfillment</h3>
+
+<p>
+Nowoczesne fulfillment center
+dla e-commerce.
+</p>
+
+</div>
+
+</div>
+
 </main>
+
+<!-- TECH -->
 
 <main id="tech" class="page">
-    <h2>Dane i Technologie</h2>
-    <div class="grid-3">
-        <div class="card"><h3>System</h3><p>Web / Mobile Responsive Dashboard.</p></div>
-        <div class="card"><h3>Grywalizacja</h3><p>Rankingi, odznaki i punkty reputacji.</p></div>
-        <div class="card"><h3>Bezpieczeństwo</h3><p>Szyfrowanie danych i moderacja treści.</p></div>
-    </div>
+
+<h2 class="section-title">
+Technologie i Systemy
+</h2>
+
+<div class="tech-grid">
+
+<div class="tech-card">
+<h3>Dashboard AI</h3>
+<p>Analiza KPI i wydajności magazynów.</p>
+</div>
+
+<div class="tech-card">
+<h3>Big Data</h3>
+<p>Przetwarzanie danych logistycznych w czasie rzeczywistym.</p>
+</div>
+
+<div class="tech-card">
+<h3>Cyber Security</h3>
+<p>Zaawansowane szyfrowanie i monitoring.</p>
+</div>
+
+<div class="tech-card">
+<h3>Cloud Infrastructure</h3>
+<p>Stabilna infrastruktura oparta na chmurze.</p>
+</div>
+
+<div class="tech-card">
+<h3>Warehouse Monitoring</h3>
+<p>Śledzenie ruchu i efektywności pracowników.</p>
+</div>
+
+<div class="tech-card">
+<h3>Automation Systems</h3>
+<p>Obsługa robotów i automatycznych sorterów.</p>
+</div>
+
+</div>
+
 </main>
+
+<!-- REVIEWS -->
 
 <main id="reviews" class="page">
-    <h2>Opinie użytkowników</h2>
-    <div class="reviews-grid">
-        <div class="review-card">
-            <div class="review-screenshot" style="background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=400');"></div>
-            <p><strong>Michał (Lider):</strong> "Błędy spadły o 1.8%!" ★★★★★</p>
-        </div>
-        <div class="review-card">
-            <div class="review-screenshot" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=400');"></div>
-            <p><strong>Anna (Studentka):</strong> "Świetny system odznak." ★★★★★</p>
-        </div>
-    </div>
+
+<h2 class="section-title">
+Opinie użytkowników
+</h2>
+
+<div class="reviews">
+
+<div class="review">
+
+<img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200">
+
+<div class="review-content">
+
+<p>
+<strong>Michał — Team Leader</strong><br><br>
+„System zwiększył wydajność magazynu
+i zmniejszył ilość błędów.”
+</p>
+
+</div>
+
+</div>
+
+<div class="review">
+
+<img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200">
+
+<div class="review-content">
+
+<p>
+<strong>Anna — Studentka</strong><br><br>
+„Świetna analiza danych oraz bardzo nowoczesny interfejs.”
+</p>
+
+</div>
+
+</div>
+
+</div>
+
 </main>
 
-<main id="auth" class="page">
-    <div class="auth-container">
-        <h2 id="auth-title">Konto E-Zestaw</h2>
-        <div class="form-group"><input type="email" placeholder="E-mail"></div>
-        <div class="form-group"><input type="password" placeholder="Hasło"></div>
-        <button class="auth-btn">Zatwierdź</button>
-    </div>
-</main>
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+<div class="modal-content">
+
+<span class="close" onclick="closeModal()">✕</span>
+
+<div id="modal-body"></div>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+<div class="footer-content">
+
+<div>
+© 2026 E-ZESTAW — Platforma logistyczna
+</div>
+
+<div class="creator">
+Site created by <span>Yakuba Dmytro</span>
+</div>
+
+</div>
+
+</footer>
 
 <script>
-    function switchPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-        event.currentTarget.classList.add('active');
-        window.scrollTo(0,0);
-    }
+
+function switchPage(pageId, btn){
+
+document.querySelectorAll('.page').forEach(page=>{
+page.classList.remove('active');
+});
+
+document.querySelectorAll('.nav-btn').forEach(b=>{
+b.classList.remove('active');
+});
+
+document.getElementById(pageId).classList.add('active');
+
+if(btn){
+btn.classList.add('active');
+}
+
+window.scrollTo({
+top:0,
+behavior:'smooth'
+});
+
+}
+
+function openLogin(){
+
+alert("Panel logowania będzie dostępny wkrótce.");
+
+}
+
+function openRegister(){
+
+alert("Rejestracja użytkowników już w przygotowaniu.");
+
+}
+
+const partnerData = {
+
+amazon: `
+<h2>Amazon WRO1</h2>
+
+<p>
+Jedno z największych centrów logistycznych
+w Europie Środkowej.
+</p>
+
+<ul>
+<li>Robotyka magazynowa</li>
+<li>Automatyczne sortowanie</li>
+<li>Peak Season Operations</li>
+<li>Tysiące przesyłek dziennie</li>
+</ul>
+`,
+
+lg: `
+<h2>LG Energy Solution</h2>
+
+<p>
+Globalny lider produkcji baterii EV
+dla sektora automotive.
+</p>
+
+<ul>
+<li>Produkcja baterii litowo-jonowych</li>
+<li>Międzynarodowa logistyka</li>
+<li>Nowoczesne magazyny</li>
+<li>Supply Chain EV</li>
+</ul>
+`,
+
+"3lp": `
+<h2>3LP Fulfillment</h2>
+
+<p>
+Nowoczesne centrum fulfillment
+dla sklepów internetowych.
+</p>
+
+<ul>
+<li>Kompletacja zamówień</li>
+<li>Obsługa marketplace</li>
+<li>Integracje WMS</li>
+<li>Zwroty i reklamacje</li>
+</ul>
+`
+
+};
+
+function openModal(id){
+
+document.getElementById('modal-body').innerHTML = partnerData[id];
+
+document.getElementById('modal').classList.add('active');
+
+}
+
+function closeModal(){
+
+document.getElementById('modal').classList.remove('active');
+
+}
+
+window.onclick = function(e){
+
+const modal = document.getElementById('modal');
+
+if(e.target === modal){
+closeModal();
+}
+
+}
+
 </script>
 
 </body>
 </html>
+```
